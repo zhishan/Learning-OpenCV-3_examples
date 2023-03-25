@@ -5,7 +5,7 @@
 
 void help(char** argv ) {
 	std::cout << "\n"
-	<< "\nxample 2-10. The same object can load videos from a camera or a file"
+	<< "\nExample 2-10. The same object can load videos from a camera or a file"
     << "\nCall:\n"  
 	<< argv[0] <<" [path/image]\n"
 	<< "\nor, read from camera:\n"

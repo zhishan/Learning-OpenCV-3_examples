@@ -2,7 +2,7 @@
 
 ## INTRO
 
-This is the example code that accompanies Learning OpenCV 3 by Adrian Kaehler and Gary Bradski ([9781491937990](http:*shop.oreilly.com/product/0636920044765.do)).
+This is the example code that accompanies Learning OpenCV 3 by Adrian Kaehler and Gary Bradski ([9781491937990](http://shop.oreilly.com/product/0636920044765.do)).
 
 Click the Download Zip button to the right to download example code.
 
@@ -170,6 +170,6 @@ For your interest, included here is an Ubuntu _Docker_ file that
 ## LINKS:
 Click the Download Zip button to the right to download example code.
 
-Visit the catalog page [here](http:*shop.oreilly.com/product/0636920044765.do).
+Visit the catalog page [here](https://shop.oreilly.com/product/0636920044765.do).
 
-See an error? Report it [here](http:*oreilly.com/catalog/errata.csp?isbn=0636920044765), or simply fork and send us a pull request
+See an error? Report it [here](https://oreilly.com/catalog/errata.csp?isbn=0636920044765), or simply fork and send us a pull request

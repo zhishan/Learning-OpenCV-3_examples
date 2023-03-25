@@ -83,11 +83,12 @@ int main( int argc, const char** argv )
 	// b
 	rng.fill(planes[2],RNG::NORMAL,128,2);
 	// c 
-	PCA pca(planes[0],Mat(),CV_PCA_DATA_AS_ROW,2);
+// https://docs.opencv.org/4.7.0/d3/d8d/classcv_1_1PCA.html#ae8a94a2add0555b0414e85c08ff67f50
+	PCA pca(planes[0],Mat(),cv::PCA::DATA_AS_ROW,2);
 	planes[0] = pca.project(planes[0]);
-	pca(planes[1],Mat(),CV_PCA_DATA_AS_ROW,2);
+	pca(planes[1],Mat(),cv::PCA::DATA_AS_ROW,2);
 	planes[1] = pca.project(planes[1]);
-	pca(planes[2],Mat(),CV_PCA_DATA_AS_ROW,2);
+	pca(planes[2],Mat(),cv::PCA::DATA_AS_ROW,2);
 	planes[2] = pca.project(planes[2]);
 	//d
 	f1 = 0;
