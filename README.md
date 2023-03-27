@@ -39,6 +39,15 @@ For your interest, included here is an Ubuntu _Docker_ file that
 
 ## CONTENTS:
 
+### example_19-01.cpp
+cv::solvePnP
+
+depends on  example_18-01_from_disk.cpp
+
+* cv::calibrateCamera
+
+
+
 ### SPECIAL FILES:
 
 * README.md       -- this readme file

@@ -81,7 +81,7 @@ int main(int argc, char *argv[]) {
   // Object points are at (r,c):
   // (0,0), (board_w-1,0), (0,board_h-1), (board_w-1,board_h-1)
   // That means corners are at: corners[r*board_w + c]
-  //
+  // 
   cv::Point2f objPts[4], imgPts[4];
   objPts[0].x = 0;
   objPts[0].y = 0;
@@ -109,7 +109,10 @@ int main(int argc, char *argv[]) {
   cv::imshow("Checkers", image);
 
   // FIND THE HOMOGRAPHY
+  // Calculates a perspective transform from four pairs of the corresponding points.
   //
+  // https://docs.opencv.org/4.x/da/d54/group__imgproc__transform.html#ga20f62aa3235d869c9956436c870893ae
+  // 构造 src, dst
   cv::Mat H = cv::getPerspectiveTransform(objPts, imgPts);
 
   // LET THE USER ADJUST THE Z HEIGHT OF THE VIEW
