@@ -15,8 +15,6 @@ endif()
 find_package( OpenCV REQUIRED )
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 
-brainstorm(hello-world)
-
 # 5
 brainstorm(DecisionTree-on-boston-house-prices)
 brainstorm(DecisionTree-on-mushroom)
