@@ -15,6 +15,12 @@ endif()
 find_package( OpenCV REQUIRED )
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 
+brainstorm(test_gcd)
+
 # 5
 brainstorm(DecisionTree-on-boston-house-prices)
 brainstorm(DecisionTree-on-mushroom)
+
+# 8
+brainstorm(SVM)
+
