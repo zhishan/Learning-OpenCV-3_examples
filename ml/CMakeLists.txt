@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5.1)
 # Other Options
 # set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-# 
+#
 project(opencv-ml)
 
 # Options
@@ -16,6 +16,9 @@ find_package( OpenCV REQUIRED )
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 
 brainstorm(test_gcd)
+
+# 4
+brainstorm(KNN)
 
 # 5
 brainstorm(DecisionTree-on-boston-house-prices)

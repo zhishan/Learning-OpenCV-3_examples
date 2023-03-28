@@ -1,8 +1,7 @@
 // SVM.cpp : 定义控制台应用程序的入口点。
 //
 
-#include "stdafx.h"
-#include "opencv.hpp"
+#include <opencv2/opencv.hpp>
 
 using namespace cv;
 using namespace cv::ml;
@@ -12,6 +11,7 @@ using namespace std;
 cv::Mat deskew(cv::Mat& img);
 // 矫正所有图像
 cv::Mat deskewBigImage(cv::Mat& img);
+/*
 HOGDescriptor hog(
 	Size(20, 20), //winSize
 	Size(10, 10), //blocksize
@@ -20,7 +20,28 @@ HOGDescriptor hog(
 	9, //nbins,
 	1, //derivAper,
 	-1, //winSigma,
-	0, //histogramNormType,
+    HOGDescriptor::L2Hys,//histogramNormType,
+	0.2, //L2HysThresh,
+	1,//gammal correction,
+	64,//nlevels=64
+	1);//Use signed gradients 
+*/
+
+/*
+     CV_Assert(blockSize.width % cellSize.width == 0 &&
+         blockSize.height % cellSize.height == 0);
+     CV_Assert((winSize.width - blockSize.width) % blockStride.width == 0 &&
+         (winSize.height - blockSize.height) % blockStride.height == 0 );
+ */
+HOGDescriptor hog(
+	Size(32, 32), //winSize
+	Size(16, 16), //blocksize
+	Size(8, 8), //blockStride,
+	Size(8, 8), //cellSize,
+	9, //nbins,
+	1, //derivAper,
+	-1, //winSigma,
+    HOGDescriptor::L2Hys,//histogramNormType,
 	0.2, //L2HysThresh,
 	1,//gammal correction,
 	64,//nlevels=64
@@ -35,8 +56,8 @@ void convert_to_ml(const vector< Mat > & train_samples, Mat& trainData);
 int main()
 {
 	// 1.读取原始数据
-	cv::Mat img = imread("digits.png", 1);
-	cvtColor(img, img, CV_BGR2GRAY);
+	cv::Mat img = imread("../Datasets/minist_png/digits.png", 1);
+	cvtColor(img, img, cv::COLOR_BGR2GRAY);
 	// 2.矫正大图
 	cv::Mat img_deskewed = img.clone();
 	img_deskewed = deskewBigImage(img);
@@ -54,6 +75,9 @@ int main()
 	vector<int> trainHOGLabel, testHOGLabel, trainRawLabel, testRawLabel;
 	generateDataSet(img_deskewed, trainHOGDataVec, testHOGDataVec, trainHOGLabel, testHOGLabel, train_rows, true);
 	generateDataSet(img_deskewed, trainRawDataVec, testRawDataVec, trainRawLabel, testRawLabel, train_rows, false);
+
+    printf("trained.size=%ld, test.size=%ld\n", trainHOGDataVec.size(), testHOGDataVec.size());
+    printf("raw trained.size=%ld, test.size=%ld\n", trainRawDataVec.size(), testRawDataVec.size());
 
 	// 2.2创建SVM分类器
 	// Set up SVM for OpenCV 3
@@ -127,6 +151,7 @@ int main()
 	//	degreeGrid// DEGREE
 	//);
 
+    printf("trainHOGData.size() = %d\n", trainHOGData.size());
 	svm->train(trainHOGData, cv::ml::ROW_SAMPLE, trainHOGLabel);
 	//printf("开始训练raw svm...\n");
 	svm_raw->train(trainRawData, cv::ml::ROW_SAMPLE, trainRawLabel);
@@ -314,13 +339,13 @@ void generateDataSet(Mat &img, vector<Mat> &trainDataVec, vector<Mat> &testDataV
 		tempTrainMat.copyTo(roi_train, mask_train);
 		tempTestMat.copyTo(roi_test, mask_test);
 		//显示效果图
-		//imshow("trainHOGMat", trainMat);
-		//imshow("tesetHOGMat", testMat);
-		//cv::waitKey(10);
+		imshow("trainHOGMat", trainMat);
+		imshow("tesetHOGMat", testMat);
+		cv::waitKey();
 	}
 	// 存大图
-	//imwrite("trainHOGMat.jpg", trainMat);
-	//imwrite("testHOGMat.jpg", testMat);
+	imwrite("trainHOGMat.jpg", trainMat);
+	imwrite("testHOGMat.jpg", testMat);
 
 	// 生成训练、测试数据
 	printf("开始生成训练、测试数据...\n");
@@ -398,8 +423,10 @@ void convert_to_ml(const vector< Mat > & train_samples, Mat& trainData)
 	const int cols = (int)std::max(train_samples[0].cols, train_samples[0].rows);
 	Mat tmp(1, cols, CV_32FC1); //< used for transposition if needed
 	trainData = Mat(rows, cols, CV_32FC1);
+    printf("train_samples.size=%ld\n", train_samples.size());
 	for (size_t i = 0; i < train_samples.size(); ++i)
 	{
+        printf("cols=%d, rows=%d\n", train_samples[i].cols, train_samples[i].rows);
 		CV_Assert(train_samples[i].cols == 1 || train_samples[i].rows == 1);
 		if (train_samples[i].cols == 1)
 		{
