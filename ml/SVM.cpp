@@ -27,25 +27,17 @@ HOGDescriptor hog(
 	1);//Use signed gradients 
 */
 
-/*
-     CV_Assert(blockSize.width % cellSize.width == 0 &&
-         blockSize.height % cellSize.height == 0);
-     CV_Assert((winSize.width - blockSize.width) % blockStride.width == 0 &&
-         (winSize.height - blockSize.height) % blockStride.height == 0 );
- */
+//create hog object
+Size blockSize(4, 4);
+Size cellSize(4, 4);
+int nbins= 9;
+
 HOGDescriptor hog(
-	Size(32, 32), //winSize
-	Size(16, 16), //blocksize
-	Size(8, 8), //blockStride,
-	Size(8, 8), //cellSize,
-	9, //nbins,
-	1, //derivAper,
-	-1, //winSigma,
-    HOGDescriptor::L2Hys,//histogramNormType,
-	0.2, //L2HysThresh,
-	1,//gammal correction,
-	64,//nlevels=64
-	1);//Use signed gradients 
+         Size(20, 20),
+         Size(blockSize.height*cellSize.height, blockSize.width*cellSize.width),
+         Size(cellSize.height,cellSize.width),
+         cellSize,
+         nbins);
 
 // 生成HOG特征数据集
 void generateDataSet(Mat &img, vector<Mat> &trainDataVec, vector<Mat> &testDataVec, vector<int> &trainLabel, vector<int> &testLabel, int train_rows, bool HOG_flag);
@@ -166,7 +158,6 @@ int main()
 	//int optDegree = svm->getDegree();
 	printf("训练完成,svm_raw最优参数C = %f,Gamma = %f\n\n", optCsvm_raw, optGammasvm_raw);
 	//printf("训练完成,最优参数:C = %f, Gamma = %f, Degree = %d\n\n", optC, optGamma, optDegree);
-	//system("PAUSE");
 	// Save trained model 
 	//svm->save("digits_hog_svm_xx_model.yml");
 	//svm_raw->save("digits_raw_svm_model.yml");
@@ -201,7 +192,6 @@ int main()
 	printf("correct = %d\n", t);
 	printf("error = %d\n", f);
 	printf("accuracy = %.4f\n", accuracy);
-	//system("PAUSE");
 	// Raw svm
 	svm_raw->predict(testRawData, result_raw);
 	t = 0;
@@ -229,7 +219,6 @@ int main()
 	printf("correct = %d\n", t);
 	printf("error = %d\n", f);
 	printf("accuracy = %.4f\n", accuracy);
-	system("PAUSE");
     return 0;
 }
 
@@ -339,9 +328,9 @@ void generateDataSet(Mat &img, vector<Mat> &trainDataVec, vector<Mat> &testDataV
 		tempTrainMat.copyTo(roi_train, mask_train);
 		tempTestMat.copyTo(roi_test, mask_test);
 		//显示效果图
-		imshow("trainHOGMat", trainMat);
-		imshow("tesetHOGMat", testMat);
-		cv::waitKey();
+		//imshow("trainHOGMat", trainMat);
+		//imshow("tesetHOGMat", testMat);
+		//cv::waitKey();
 	}
 	// 存大图
 	imwrite("trainHOGMat.jpg", trainMat);
