@@ -16,6 +16,7 @@ find_package( OpenCV REQUIRED )
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 
 brainstorm(test_gcd)
+brainstorm(moments_demo)
 
 # 4
 brainstorm(KNN)
